@@ -1,4 +1,4 @@
-package org.symantec.ci;
+package org.stc.ci;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

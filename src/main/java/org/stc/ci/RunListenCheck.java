@@ -1,4 +1,4 @@
-package org.symantec.ci;
+package org.stc.ci;
 
 import hudson.Extension;
 import hudson.model.AbstractBuild;

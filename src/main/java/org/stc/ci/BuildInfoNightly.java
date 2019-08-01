@@ -1,4 +1,4 @@
-package org.symantec.ci;
+package org.stc.ci;
 
 import java.io.IOException;
 import java.sql.Connection;

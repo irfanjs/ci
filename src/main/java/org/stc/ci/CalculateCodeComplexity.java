@@ -1,9 +1,10 @@
-package org.symantec.ci;
+package org.stc.ci;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -12,19 +13,19 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-public class Testview {
-
-	public static void main(String[] args) throws MalformedURLException, IOException {
-		
-            Testview T = new Testview();
-            T.getData();
-	}
+public class CalculateCodeComplexity {
 	
+	public CalculateCodeComplexity()
+	{
+	}
+
 	public static String readURL(String url) throws MalformedURLException, IOException
 	{
 		String jsonText;
@@ -47,39 +48,36 @@ public class Testview {
 			sb.append((char) cp);
 		}
 		return sb.toString();
+		
 	}
 
-	public Map<String, String> getData() throws MalformedURLException, IOException
+	public Map<String, Float> getData(PrintStream logger) throws MalformedURLException, IOException
 	{
 		String jsonText;
-		jsonText = readURL("http://10.211.161.72/view/All/api/json");
-//		jsonText = readURL(url);
+		jsonText = readURL("http://10.211.64.231:9000/api/resources?metrics=function_complexity&format=json");
 		System.out.println(jsonText);
 		System.out.println(jsonText.length());
 		Gson gson = new Gson();        
 		JsonParser parser = new JsonParser();
-		
-		//JsonArray jArray = parser.parse(jsonText).getAsJsonArray().get;
-		JsonArray jArray = (JsonArray)parser.parse(jsonText).getAsJsonObject().get("jobs");
-		 ArrayList<Job> lcs = new ArrayList<Job>();
-		Map <String, String> hm = new HashMap<String, String>();
+		JsonArray jArray = parser.parse(jsonText).getAsJsonArray();
+		 ArrayList<ComplexityCategories> lcs = new ArrayList<ComplexityCategories>();
+		Map <String, Float> hm = new HashMap<String, Float>();
 		for(JsonElement obj : jArray )
 		{
 			
-			Job cse = gson.fromJson( obj , Job.class);
+			ComplexityCategories cse = gson.fromJson( obj , ComplexityCategories.class);
 			lcs.add(cse);
 			//hm.put(cse.getKey(), cse.getComplexityData().get(0).getVal());
 		}
 		
-		 Iterator<Job> it = lcs.iterator();
+		 Iterator<ComplexityCategories> it = lcs.iterator();
 		 while(it.hasNext())
 		    {
-			 Job obj = it.next();
+			 ComplexityCategories obj = it.next();
 				        
-		        //System.out.println(obj.getJobs().get(0).getName());
-			 System.out.println(obj.getName());
+		        System.out.println(obj.getMsr().get(0).getVal());
 		        
-		  //      hm.put("all", obj.getJobs().get(0).getName());
+		        hm.put(obj.getName(), obj.getMsr().get(0).getVal());
 		     
 		    }
 		 
@@ -89,8 +87,13 @@ public class Testview {
 		        System.out.println(pairs.getKey() + " = " + pairs.getValue());
 		   
 		    }
+		 
+
 		return hm;
 
 	}
 
 }
+
+
+

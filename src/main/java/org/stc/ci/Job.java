@@ -1,4 +1,4 @@
-package org.symantec.ci;
+package org.stc.ci;
 
 import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;

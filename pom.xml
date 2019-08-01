@@ -6,7 +6,7 @@
     <version>1.535</version><!-- which version of Jenkins is this plugin built against? -->
   </parent>
 
-  <groupId>org.symantec</groupId> 
+  <groupId>org.stc</groupId> 
   <artifactId>ci</artifactId>
   <version>1.18</version>
   <packaging>hpi</packaging>
