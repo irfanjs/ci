@@ -151,7 +151,7 @@
 <dependency>
 <groupId>org.jenkins-ci.plugins</groupId>
  <artifactId>testng-plugin</artifactId>
-    <version>1.6</version>
+    <version>555.va0d5f66521e3</version>
 </dependency>
 <dependency>
 	<groupId>mysql</groupId>
